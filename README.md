@@ -1,7 +1,5 @@
 # Knowledge Independence Breeds Disruption but Limits Recognition
 
-[![DOI](https://zenodo.org/badge/991603851.svg)](https://doi.org/10.5281/zenodo.15534384)
-
 This repository contains data and code required to reproduce the findings in paper "Knowledge Independence Breeds Disruption but Limits Recognition". This repository is organized in the following way:
 
 - A data file is anonymized if it contains identifiers that could reveal the identity of papers/authors; all analyzed data can be found in the `data\` directory.
