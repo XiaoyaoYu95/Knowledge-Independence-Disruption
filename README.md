@@ -20,7 +20,6 @@ Python libraries:
 - seaborn 0.13.2
 - matplotlib 3.9.2
 - statsmodels 0.14.2
-- psmpy 0.3.13
 - patsy 0.5.6
 
 
