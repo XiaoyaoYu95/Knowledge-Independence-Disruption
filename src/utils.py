@@ -38,7 +38,7 @@ def dataframe_nor(df):
     standardizing dataframe by z-score
     """
     # select numeric columns and apply z-score normalization
-    df_nor = df.select_dtypes(include=[np.number]).apply(stats.zscore)
+    df_nor = df.select_dtypes(include=[np.number]).apply(stats.zscore).astype(np.float32)
     # replace the original numeric columns with standardized values
     for col in df_nor.columns:
         df[col] = df_nor[col]
@@ -57,9 +57,19 @@ def load_data(file_path, data_type, all_vars):
     """
     df = pd.read_pickle(file_path)
 
-    # transform 'C5' column to log scale
-    df['log_C5'] = df['C5'].apply(np.log1p)# 对'C5'列做log(x + 1)
-    df['Citation_percentile'] = df.groupby(['Year', 'Field'])['Copen'].transform(rank) # calculate the citation percentile within each year and field
+    # Ensure Year and Field are categorical to reduce memory used by dummies later
+    if 'Year' in df.columns:
+        df['Year'] = df['Year'].astype('category')
+    if 'Field' in df.columns:
+        df['Field'] = df['Field'].astype('category')
+
+    # apply log transform and select relevant columns early to reduce memory
+    if 'C5' in df.columns:
+        df['C5'] = df['C5'].apply(np.log1p).astype(np.float32) # log(x+1)
+
+    # calculate the citation percentile within each year and field
+    if 'Copen' in df.columns:
+        df['Citation_percentile'] = df.groupby(['Year', 'Field'])['Copen'].transform(rank)
 
     # Ensure all specified variables are in the dataframe
     df = df[all_vars]
