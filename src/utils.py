@@ -65,7 +65,7 @@ def load_data(file_path, data_type, all_vars):
 
     # apply log transform and select relevant columns early to reduce memory
     if 'C5' in df.columns:
-        df['C5'] = df['C5'].apply(np.log1p).astype(np.float32) # log(x+1)
+        df['log_C5'] = df['C5'].apply(np.log1p).astype(np.float32) # log(x+1)
 
     # calculate the citation percentile within each year and field
     if 'Copen' in df.columns:
