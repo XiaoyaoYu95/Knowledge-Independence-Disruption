@@ -45,7 +45,7 @@ def dataframe_nor(df):
     return df
     
     
-def load_data(file_path, data_type, all_vars):
+def load_data(file_path, data_type, all_vars, categorical_cols):
     """
     Load data from a pickle file and merge with additional dataframes.
     Args:
@@ -57,11 +57,10 @@ def load_data(file_path, data_type, all_vars):
     """
     df = pd.read_pickle(file_path)
 
-    # Ensure Year and Field are categorical to reduce memory used by dummies later
-    if 'Year' in df.columns:
-        df['Year'] = df['Year'].astype('category')
-    if 'Field' in df.columns:
-        df['Field'] = df['Field'].astype('category')
+    # Ensure categorical columns are categorical to reduce memory used by dummies later
+    for col in categorical_cols:
+        if col in df.columns:
+            df[col] = df[col].astype('category')
 
     # apply log transform and select relevant columns early to reduce memory
     if 'C5' in df.columns:
@@ -77,9 +76,6 @@ def load_data(file_path, data_type, all_vars):
     
     if data_type == "nor":# standardizing dataframe
         df = dataframe_nor(df)
-
-    # add a unique identifier for each paper
-    df['paper_id'] = list(range(len(df)))
     
     return df
 
