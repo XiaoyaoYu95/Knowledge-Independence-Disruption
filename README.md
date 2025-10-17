@@ -21,6 +21,5 @@ Python libraries:
 - matplotlib 3.9.2
 - statsmodels 0.14.2
 - scikit-learn 1.5.1
-- dominance-analysis 1.1.9
 
 Each Jupyter Notebook is self-contained and can be executed using a Notebook Server. The expected outputs are in the Jupyter Notebooks themselves, as well as contained in the `results\` directory.
